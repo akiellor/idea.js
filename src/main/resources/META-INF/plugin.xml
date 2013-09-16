@@ -1,0 +1,20 @@
+<idea-plugin version="2">
+    <id>org.intellij.custom</id>
+    <name>Custom</name>
+    <version>0.0.1</version>
+    <vendor email="akiellor@gmail.com" url="http://github.com/akiellor/intellij-custom">Andrew Kiellor</vendor>
+
+    <description>A plugin to allow user specified, project specific intellij customisations.</description>
+
+    <change-notes><![CDATA[
+       <ul>
+         <li>Added support to define run configurations in javascript.<li>
+       </ul>
+    ]]></change-notes>
+
+    <idea-version since-build="107.105"/>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <configurationProducer implementation="org.intellij.custom.CustomRunConfigurationProducer"/>
+    </extensions>
+</idea-plugin>
