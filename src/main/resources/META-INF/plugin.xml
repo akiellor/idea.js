@@ -1,5 +1,5 @@
 <idea-plugin version="2">
-    <id>org.intellij.custom</id>
+    <id>org.intellij.alt.runconfiguration</id>
     <name>Custom</name>
     <version>0.0.1</version>
     <vendor email="akiellor@gmail.com" url="http://github.com/akiellor/intellij-custom">Andrew Kiellor</vendor>
@@ -15,6 +15,6 @@
     <idea-version since-build="107.105"/>
 
     <extensions defaultExtensionNs="com.intellij">
-        <configurationProducer implementation="org.intellij.custom.CustomRunConfigurationProducer"/>
+        <configurationProducer implementation="org.intellij.alt.runconfiguration.CustomRunConfigurationProducer"/>
     </extensions>
 </idea-plugin>

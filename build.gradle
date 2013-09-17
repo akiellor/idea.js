@@ -15,6 +15,7 @@ repositories {
 
 configurations{
     provided
+    testCompile.extendsFrom provided
 }
 
 dependencies{
@@ -25,6 +26,7 @@ dependencies{
     provided name: 'openapi'
     provided name: 'annotations'
     provided name: 'extensions'
+    provided name: 'picocontainer'
 
     testCompile 'junit:junit-dep:4.11'
     testCompile 'org.mockito:mockito-all:1.9.5'

@@ -1,4 +1,4 @@
-package org.intellij.custom;
+package org.intellij.alt.runconfiguration;
 
 import org.dynjs.runtime.DynObject;
 

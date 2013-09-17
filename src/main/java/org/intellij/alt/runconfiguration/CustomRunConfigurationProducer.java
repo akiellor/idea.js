@@ -1,4 +1,4 @@
-package org.intellij.custom;
+package org.intellij.alt.runconfiguration;
 
 import com.intellij.execution.Location;
 import com.intellij.execution.RunnerAndConfigurationSettings;
@@ -7,6 +7,7 @@ import com.intellij.execution.application.ApplicationConfiguration;
 import com.intellij.execution.application.ApplicationConfigurationType;
 import com.intellij.execution.junit.RuntimeConfigurationProducer;
 import com.intellij.openapi.module.Module;
+import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
@@ -19,6 +20,7 @@ import org.dynjs.runtime.JSFunction;
 import org.jetbrains.annotations.Nullable;
 
 public class CustomRunConfigurationProducer extends RuntimeConfigurationProducer implements Cloneable {
+    @SuppressWarnings("unused")
     private PsiFile containingFile;
 
     public CustomRunConfigurationProducer() {
@@ -38,13 +40,9 @@ public class CustomRunConfigurationProducer extends RuntimeConfigurationProducer
 
         Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
 
-        Config config = new Config(this.getClass().getClassLoader());
-        config.setCompileMode(Config.CompileMode.OFF);
-        DynJS runtime = new DynJS(config);
-        runtime.getExecutionContext().getGlobalObject().addLoadPath(context.getProject().getBasePath());
+        JavascriptRuntime runtime = new JavascriptRuntime(context.getProject());
 
-        JSFunction function = (JSFunction) runtime.evaluate("require('ide/ide').configuration");
-        final DynObject object = (DynObject) runtime.getExecutionContext().call(function, (Object)null, context);
+        final DynObject object = (DynObject) runtime.call("require('ide/ide').configuration", context);
         if (object == null) { return null; }
 
         Configuration configuration = new DynObjectConfiguration(object);
@@ -64,5 +62,21 @@ public class CustomRunConfigurationProducer extends RuntimeConfigurationProducer
     @Override
     public int compareTo(Object o) {
         return PREFERED;
+    }
+
+    public static class JavascriptRuntime {
+        private final DynJS runtime;
+
+        public JavascriptRuntime(Project project) {
+            Config config = new Config(this.getClass().getClassLoader());
+            config.setCompileMode(Config.CompileMode.OFF);
+            this.runtime = new DynJS(config);
+            this.runtime.getExecutionContext().getGlobalObject().addLoadPath(project.getBasePath());
+        }
+
+        public Object call(String script, Object... args) {
+            JSFunction function = (JSFunction)runtime.evaluate(script);
+            return runtime.getExecutionContext().call(function, (Object)null, args);
+        }
     }
 }
