@@ -10,11 +10,11 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.io.File;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.intellij.alt.runconfiguration.ScriptedRunConfigurationProducer.JavascriptRuntime;
+import static org.intellij.alt.runconfiguration.ProducerShim.JavascriptRuntime;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ScriptedRunConfigurationProducerTest {
+public class ProducerShimTest {
     @Rule public FilesystemRule filesystem = new FilesystemRule(new File("."));
 
     @Mock Project project;

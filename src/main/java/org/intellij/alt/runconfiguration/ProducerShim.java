@@ -1,5 +1,6 @@
 package org.intellij.alt.runconfiguration;
 
+import com.google.common.base.Optional;
 import com.intellij.execution.Location;
 import com.intellij.execution.RunnerAndConfigurationSettings;
 import com.intellij.execution.actions.ConfigurationContext;
@@ -17,13 +18,14 @@ import org.dynjs.Config;
 import org.dynjs.runtime.DynJS;
 import org.dynjs.runtime.DynObject;
 import org.dynjs.runtime.JSFunction;
+import org.dynjs.runtime.builtins.Require;
 import org.jetbrains.annotations.Nullable;
 
-public class ScriptedRunConfigurationProducer extends RuntimeConfigurationProducer implements Cloneable {
+public class ProducerShim extends RuntimeConfigurationProducer implements Cloneable {
     @SuppressWarnings("unused")
     private PsiFile containingFile;
 
-    public ScriptedRunConfigurationProducer() {
+    public ProducerShim() {
         super(ApplicationConfigurationType.getInstance());
     }
 
@@ -38,23 +40,22 @@ public class ScriptedRunConfigurationProducer extends RuntimeConfigurationProduc
         Module module = context.getModule();
         if (module == null) { return null; }
 
-        Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
-
         JavascriptRuntime runtime = new JavascriptRuntime(context.getProject());
+        ScriptedProducer scriptedProducer = new ScriptedProducer(runtime);
 
-        final DynObject object = (DynObject) runtime.call("require('ide/ide').configuration", context);
-        if (object == null) { return null; }
+        Optional<? extends Configuration> configuration = scriptedProducer.produce(context);
+        if(!configuration.isPresent()) {
+            return null;
+        }
 
-        Configuration configuration = new DynObjectConfiguration(object);
-
-        PsiClass mainClass = ClassUtil.findPsiClass(PsiManager.getInstance(context.getProject()), configuration.main());
+        PsiClass mainClass = ClassUtil.findPsiClass(PsiManager.getInstance(context.getProject()), configuration.get().main());
         if(mainClass == null) { return null; }
 
         RunnerAndConfigurationSettings settings = cloneTemplateConfiguration(context.getProject(), context);
         ApplicationConfiguration intellijConfiguration = (ApplicationConfiguration) settings.getConfiguration();
         intellijConfiguration.setMainClass(mainClass);
-        intellijConfiguration.setProgramParameters(configuration.arguments());
-        intellijConfiguration.setName(configuration.name());
+        intellijConfiguration.setProgramParameters(configuration.get().arguments());
+        intellijConfiguration.setName(configuration.get().name());
         return settings;
 
     }
@@ -71,7 +72,8 @@ public class ScriptedRunConfigurationProducer extends RuntimeConfigurationProduc
             Config config = new Config(this.getClass().getClassLoader());
             config.setCompileMode(Config.CompileMode.OFF);
             this.runtime = new DynJS(config);
-            this.runtime.getExecutionContext().getGlobalObject().addLoadPath(project.getBasePath());
+            ((Require)runtime.getExecutionContext().getGlobalObject().get("require"))
+                    .addLoadPath(project.getBasePath());
         }
 
         public Object call(String script, Object... args) {
