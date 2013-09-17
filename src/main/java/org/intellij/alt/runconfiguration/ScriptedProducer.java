@@ -4,9 +4,9 @@ import com.google.common.base.Optional;
 import org.dynjs.runtime.DynObject;
 
 public class ScriptedProducer {
-    private final ProducerShim.JavascriptRuntime runtime;
+    private final JavascriptRuntime runtime;
 
-    public ScriptedProducer(ProducerShim.JavascriptRuntime runtime) {
+    public ScriptedProducer(JavascriptRuntime runtime) {
         this.runtime = runtime;
     }
 

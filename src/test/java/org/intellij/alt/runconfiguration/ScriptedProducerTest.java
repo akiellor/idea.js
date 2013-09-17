@@ -12,7 +12,8 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ScriptedProducerTest {
-    @Mock ProducerShim.JavascriptRuntime runtime;
+    @Mock
+    JavascriptRuntime runtime;
     @Mock DynObject object;
     @Mock Object context;
 

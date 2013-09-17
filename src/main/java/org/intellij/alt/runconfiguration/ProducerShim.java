@@ -8,16 +8,11 @@ import com.intellij.execution.application.ApplicationConfiguration;
 import com.intellij.execution.application.ApplicationConfigurationType;
 import com.intellij.execution.junit.RuntimeConfigurationProducer;
 import com.intellij.openapi.module.Module;
-import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.util.ClassUtil;
-import org.dynjs.Config;
-import org.dynjs.runtime.DynJS;
-import org.dynjs.runtime.JSFunction;
-import org.dynjs.runtime.builtins.Require;
 import org.jetbrains.annotations.Nullable;
 
 public class ProducerShim extends RuntimeConfigurationProducer implements Cloneable {
@@ -64,20 +59,4 @@ public class ProducerShim extends RuntimeConfigurationProducer implements Clonea
         return PREFERED;
     }
 
-    public static class JavascriptRuntime {
-        private final DynJS runtime;
-
-        public JavascriptRuntime(Project project) {
-            Config config = new Config(this.getClass().getClassLoader());
-            config.setCompileMode(Config.CompileMode.OFF);
-            this.runtime = new DynJS(config);
-            ((Require)runtime.getExecutionContext().getGlobalObject().get("require"))
-                    .addLoadPath(project.getBasePath());
-        }
-
-        public Object call(String script, Object... args) {
-            JSFunction function = (JSFunction)runtime.evaluate(script);
-            return runtime.getExecutionContext().call(function, (Object)null, args);
-        }
-    }
 }
