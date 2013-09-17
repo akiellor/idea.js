@@ -15,6 +15,6 @@
     <idea-version since-build="107.105"/>
 
     <extensions defaultExtensionNs="com.intellij">
-        <configurationProducer implementation="org.intellij.alt.runconfiguration.CustomRunConfigurationProducer"/>
+        <configurationProducer implementation="org.intellij.alt.runconfiguration.ScriptedRunConfigurationProducer"/>
     </extensions>
 </idea-plugin>

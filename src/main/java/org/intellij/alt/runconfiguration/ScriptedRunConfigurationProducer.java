@@ -19,11 +19,11 @@ import org.dynjs.runtime.DynObject;
 import org.dynjs.runtime.JSFunction;
 import org.jetbrains.annotations.Nullable;
 
-public class CustomRunConfigurationProducer extends RuntimeConfigurationProducer implements Cloneable {
+public class ScriptedRunConfigurationProducer extends RuntimeConfigurationProducer implements Cloneable {
     @SuppressWarnings("unused")
     private PsiFile containingFile;
 
-    public CustomRunConfigurationProducer() {
+    public ScriptedRunConfigurationProducer() {
         super(ApplicationConfigurationType.getInstance());
     }
 
