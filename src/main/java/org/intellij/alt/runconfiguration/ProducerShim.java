@@ -16,7 +16,6 @@ import com.intellij.psi.PsiManager;
 import com.intellij.psi.util.ClassUtil;
 import org.dynjs.Config;
 import org.dynjs.runtime.DynJS;
-import org.dynjs.runtime.DynObject;
 import org.dynjs.runtime.JSFunction;
 import org.dynjs.runtime.builtins.Require;
 import org.jetbrains.annotations.Nullable;

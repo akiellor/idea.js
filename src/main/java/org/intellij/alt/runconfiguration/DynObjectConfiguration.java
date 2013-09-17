@@ -1,7 +1,5 @@
 package org.intellij.alt.runconfiguration;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.dynjs.runtime.DynObject;
 
 public class DynObjectConfiguration implements Configuration {
