@@ -49,14 +49,10 @@ public class ProducerShim extends RuntimeConfigurationProducer implements Clonea
                 return null;
             }
 
-            PsiClass mainClass = ClassUtil.findPsiClass(PsiManager.getInstance(context.getProject()), configuration.get().main());
-            if (mainClass == null) {
-                return null;
-            }
-
             RunnerAndConfigurationSettings settings = cloneTemplateConfiguration(context.getProject(), context);
             ApplicationConfiguration intellijConfiguration = (ApplicationConfiguration) settings.getConfiguration();
-            intellijConfiguration.setMainClass(mainClass);
+            intellijConfiguration.setModule(module);
+            intellijConfiguration.setMainClassName(configuration.get().main());
             intellijConfiguration.setProgramParameters(configuration.get().arguments());
             intellijConfiguration.setName(configuration.get().name());
             return settings;
