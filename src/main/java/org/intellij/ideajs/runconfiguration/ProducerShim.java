@@ -9,11 +9,8 @@ import com.intellij.execution.application.ApplicationConfigurationType;
 import com.intellij.execution.junit.RuntimeConfigurationProducer;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.module.Module;
-import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.util.ClassUtil;
 import org.jetbrains.annotations.Nullable;
 
 public class ProducerShim extends RuntimeConfigurationProducer implements Cloneable {
