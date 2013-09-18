@@ -32,6 +32,32 @@ public class JavascriptRuntimeTest {
     }
 
     @Test
+    public void shouldCoerceJsNullToNull(){
+        filesystem.file("foo.js", "exports.foo = function() { return null; };");
+
+        when(project.getBasePath()).thenReturn(filesystem.root());
+
+        JavascriptRuntime runtime = new JavascriptRuntime(project);
+
+        Object result = runtime.call("require('foo').foo");
+
+        assertThat(result).isNull();
+    }
+
+    @Test
+    public void shouldCoerceJsUndefinedToNull(){
+        filesystem.file("foo.js", "exports.foo = function() { };");
+
+        when(project.getBasePath()).thenReturn(filesystem.root());
+
+        JavascriptRuntime runtime = new JavascriptRuntime(project);
+
+        Object result = runtime.call("require('foo').foo");
+
+        assertThat(result).isNull();
+    }
+
+    @Test
     public void shouldReloadContentsOfFileSystemInNewInstanceOfJavascriptRuntime(){
         when(project.getBasePath()).thenReturn(filesystem.root());
 
