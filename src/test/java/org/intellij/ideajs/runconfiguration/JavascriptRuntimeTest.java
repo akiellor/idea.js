@@ -30,4 +30,19 @@ public class JavascriptRuntimeTest {
 
         assertThat(result).isEqualTo(2L);
     }
+
+    @Test
+    public void shouldReloadContentsOfFileSystemInNewInstanceOfJavascriptRuntime(){
+        when(project.getBasePath()).thenReturn(filesystem.root());
+
+        filesystem.file("foo.js", "exports.foo = function() { return 2; };");
+
+        new JavascriptRuntime(project).call("require('foo').foo");
+
+        filesystem.file("foo.js", "exports.foo = function() { return 4; };");
+
+        JavascriptRuntime runtime = new JavascriptRuntime(project);
+        Object result = runtime.call("require('foo').foo");
+        assertThat(result).isEqualTo(4L);
+    }
 }

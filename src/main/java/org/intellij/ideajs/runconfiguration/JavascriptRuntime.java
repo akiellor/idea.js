@@ -13,6 +13,7 @@ public class JavascriptRuntime {
         Config config = new Config(this.getClass().getClassLoader());
         config.setCompileMode(Config.CompileMode.OFF);
         this.runtime = new DynJS(config);
+        this.runtime.clearModuleCache();
         ((Require)runtime.getExecutionContext().getGlobalObject().get("require"))
                 .addLoadPath(project.getBasePath());
     }
