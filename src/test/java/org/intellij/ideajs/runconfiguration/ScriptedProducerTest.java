@@ -19,7 +19,7 @@ public class ScriptedProducerTest {
 
     @Test
     public void shouldRequireIdeConfiguration(){
-        when(runtime.call("require('ide/ide').configuration", context)).thenReturn(object);
+        when(runtime.call("require('idea').configuration", context)).thenReturn(object);
 
         ScriptedProducer producer = new ScriptedProducer(runtime);
 
@@ -28,7 +28,7 @@ public class ScriptedProducerTest {
 
     @Test
     public void shouldReturnAbsentWhenConfigurationNotPresent(){
-        when(runtime.call("require('ide/ide').configuration", context)).thenReturn(null);
+        when(runtime.call("require('idea').configuration", context)).thenReturn(null);
 
         ScriptedProducer producer = new ScriptedProducer(runtime);
 

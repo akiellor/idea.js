@@ -11,7 +11,7 @@ public class ScriptedProducer {
     }
 
     public Optional<? extends Configuration> produce(Object context) {
-        DynObject object = (DynObject) runtime.call("require('ide/ide').configuration", context);
+        DynObject object = (DynObject) runtime.call("require('idea').configuration", context);
         if (object == null) { return Optional.absent(); }
         return Optional.fromNullable(new DynObjectConfiguration(object));
     }
