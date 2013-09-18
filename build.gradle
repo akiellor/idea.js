@@ -36,6 +36,14 @@ dependencies{
 
 sourceSets.main.compileClasspath += configurations.provided
 
+task zip(type: Zip) {
+    def name = project.getName()
+    into("$name/lib") {
+        from jar
+        from configurations.runtime
+    }
+}
+
 idea {
     module {
         iml {
