@@ -43,6 +43,7 @@ task zip(type: Zip) {
         from configurations.runtime
     }
 }
+assemble.dependsOn(zip)
 
 idea {
     module {
