@@ -1,4 +1,4 @@
-package org.intellij.alt.runconfiguration;
+package org.intellij.ideajs.runconfiguration;
 
 import com.google.common.base.Optional;
 import com.intellij.execution.Location;

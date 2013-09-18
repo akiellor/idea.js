@@ -1,4 +1,4 @@
-package org.intellij.alt.runconfiguration;
+package org.intellij.ideajs.runconfiguration;
 
 import com.intellij.openapi.project.Project;
 import org.junit.Rule;

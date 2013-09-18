@@ -1,4 +1,4 @@
-package org.intellij.alt.runconfiguration;
+package org.intellij.ideajs.runconfiguration;
 
 public interface Configuration {
     String main();

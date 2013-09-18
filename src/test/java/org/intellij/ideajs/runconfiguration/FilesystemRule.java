@@ -1,4 +1,4 @@
-package org.intellij.alt.runconfiguration;
+package org.intellij.ideajs.runconfiguration;
 
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
