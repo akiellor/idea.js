@@ -30,8 +30,8 @@ exports.configuration = function(context) {
 Developing
 ----------
 
-1. Modify the 'installation.dir' property in the gradle-idea.properties to match your installation of IntelliJ.
+1. Modify the `installation.dir` property in the gradle-idea.properties to match your installation of IntelliJ.
 
-2. `$ gradle build` to build a distribution of the plugin into 'build/distributions/', this plugin can be installed via the 'Settings -> Plugins' within IntelliJ
+2. `$ gradle build` to build a distribution of the plugin into `build/distributions/`, this plugin can be installed via the `Settings -> Plugins` within IntelliJ.
 
-3. `$ gradle idea` to build intellij project files suitable for development
+3. `$ gradle idea` to build intellij project files suitable for development.
